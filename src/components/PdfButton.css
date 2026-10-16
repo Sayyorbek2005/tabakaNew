@@ -1,0 +1,3 @@
+.pdf-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.details > .pdf-actions > .button { flex: 1; }
+.pdf-download-error { flex-basis: 100%; color: #a43e2c; font-size: 12px; }

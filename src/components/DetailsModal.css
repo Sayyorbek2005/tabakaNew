@@ -1,0 +1,52 @@
+.details { display: grid; gap: 22px; }
+.details-title small { color: var(--muted); font-size: 11px; letter-spacing: 1px; }
+.details-title h3 { margin: 8px 0 0; font-size: 25px; overflow-wrap: anywhere; }
+.details-info { display: grid; gap: 13px; margin: 0; }
+.details-info > div { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 15px; font-size: 13px; }
+.details-info dt { color: var(--muted); }
+.details-info dd { margin: 0; overflow-wrap: anywhere; }
+
+.details-totals {
+  display: grid;
+  gap: 13px;
+  padding: 18px;
+  border-radius: 14px;
+  background: var(--mint);
+}
+
+.details-totals > div { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; }
+.details-totals span { color: #587568; }
+.details-totals strong { color: var(--green); text-align: right; overflow-wrap: anywhere; }
+.details-totals > div:last-child { padding-top: 13px; border-top: 1px solid #cfdfd3; }
+.details-methods { display: flex; flex-wrap: wrap; gap: 12px 22px; color: var(--muted); font-size: 12px; }
+.details-methods strong { color: var(--ink); }
+.details h4 { margin: 0 0 14px; font-size: 15px; }
+.details-list { display: grid; gap: 12px; }
+
+.details-product,
+.details-payment {
+  width: 100%;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: #fbfdfb;
+  color: var(--ink);
+  text-align: left;
+}
+
+.details-product { cursor: pointer; transition: 0.2s; }
+.details-product:hover { border-color: #80a391; background: var(--mint); }
+.details-product-head { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-size: 13px; }
+.details-product-head small { color: var(--muted); font-size: 11px; }
+.details-product p,
+.details-payment p { margin: 9px 0 0; color: #6c8076; font-size: 12px; line-height: 1.7; overflow-wrap: anywhere; }
+.details-product-sums { display: grid; gap: 7px; padding-top: 12px; margin-top: 12px; border-top: 1px solid var(--line); font-size: 12px; }
+.details-product-sums span:last-child { color: #a56937; }
+.details-allocations { display: grid; gap: 10px; padding: 0; margin: 12px 0 0; list-style: none; }
+.details-allocations li { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-size: 12px; }
+.details-empty { margin: 0; color: var(--muted); font-size: 13px; }
+
+@media (max-width: 480px) {
+  .details-info > div { grid-template-columns: 105px minmax(0, 1fr); gap: 10px; }
+  .details-title h3 { font-size: 22px; }
+}

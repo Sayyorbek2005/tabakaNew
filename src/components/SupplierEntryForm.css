@@ -1,0 +1,68 @@
+.supplier-entry { display: grid; gap: 18px; }
+.entry-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.entry-wide { grid-column: 1 / -1; }
+
+.entry-section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.entry-section-title h3 { margin: 0; color: var(--ink); font-size: 15px; }
+.entry-section-title span { color: var(--muted); font-size: 12px; }
+.entry-products { display: grid; gap: 14px; }
+
+.entry-product {
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fbfdfb;
+}
+
+.entry-row-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.entry-row-title strong { color: var(--green); font-size: 13px; }
+
+.entry-line-total {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 14px;
+  margin-top: 14px;
+  border-top: 1px dashed #d5e2d9;
+  font-size: 12px;
+}
+
+.entry-line-total span { color: var(--muted); }
+.entry-line-total strong { color: var(--green); text-align: right; overflow-wrap: anywhere; }
+.entry-add { width: 100%; border-style: dashed; }
+
+.entry-summary {
+  display: grid;
+  gap: 13px;
+  padding: 18px;
+  border-radius: 14px;
+  background: var(--mint);
+}
+
+.entry-summary > div { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; }
+.entry-summary span { color: #587568; }
+.entry-summary strong { color: var(--green); text-align: right; overflow-wrap: anywhere; }
+.entry-summary > div:last-child { padding-top: 13px; border-top: 1px solid #cfdfd3; }
+.entry-summary .entry-overpaid strong { color: #b44d3b; }
+.supplier-entry .form-actions { margin-top: 0; }
+.supplier-entry .form-hint, .supplier-entry .form-error { margin: 0; }
+
+@media (max-width: 480px) {
+  .entry-fields { grid-template-columns: 1fr; }
+  .entry-product { padding: 13px; }
+  .supplier-entry .form-actions { flex-wrap: wrap; }
+  .supplier-entry .form-actions .button { flex: 1; }
+}

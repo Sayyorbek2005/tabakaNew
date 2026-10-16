@@ -1,0 +1,8 @@
+.product-filters { flex-wrap: wrap; }
+.product-filters .search-box { flex: 1; min-width: 220px; }
+.product-filters select { min-width: 180px; }
+
+@media (max-width: 650px) {
+  .product-filters select,
+  .product-filters .search-box { width: 100%; min-width: 0; }
+}

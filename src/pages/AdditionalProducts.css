@@ -1,0 +1,118 @@
+.additional-product-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0 0 18px;
+}
+
+.additional-product-stats article {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fff;
+}
+
+.additional-product-stats span,
+.additional-product-code {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.additional-product-stats strong {
+  font-size: 19px;
+}
+
+.additional-product-filters {
+  flex-wrap: wrap;
+}
+
+.additional-product-filters .search-box {
+  flex: 1 1 280px;
+  max-width: none;
+}
+
+.additional-product-filters select {
+  min-width: 190px;
+}
+
+.additional-product-table-wrap {
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fff;
+}
+
+.additional-product-table {
+  width: 100%;
+  min-width: 980px;
+  border-collapse: collapse;
+}
+
+.additional-product-table th,
+.additional-product-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  white-space: nowrap;
+  font-size: 12px;
+}
+
+.additional-product-table th {
+  color: var(--muted);
+  background: #f7f9f7;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.additional-product-table tr:last-child td {
+  border-bottom: 0;
+}
+.additional-product-row { cursor: pointer; }
+.additional-product-row:hover,
+.additional-product-row:focus-within { background: #f0f6f2; }
+.additional-product-row:focus-visible { outline: 2px solid var(--green); outline-offset: -2px; }
+
+.additional-product-table td:first-child {
+  min-width: 190px;
+}
+
+.additional-product-code {
+  display: block;
+  margin-top: 4px;
+}
+
+@media (max-width: 700px) {
+  .additional-product-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .additional-product-stats article {
+    min-width: 0;
+    padding: 12px 9px;
+    border-radius: 12px;
+  }
+
+  .additional-product-stats span {
+    min-height: 42px;
+    font-size: 10px;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+  }
+
+  .additional-product-stats strong {
+    font-size: 15px;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+  }
+
+  .additional-product-filters select,
+  .additional-product-filters .search-box {
+    width: 100%;
+    min-width: 0;
+  }
+
+}

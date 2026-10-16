@@ -1,0 +1,9 @@
+.additional-usage-history { display: grid; gap: 16px; }
+.additional-usage-heading { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+.additional-usage-heading h4 { margin: 0; }
+.additional-usage-heading .button { padding: 10px 12px; font-size: 11px; }
+.additional-usage-form { padding: 16px; border: 1px solid var(--line); border-radius: 12px; background: #f7faf8; }
+.additional-usage-form .form-hint { margin-top: 0; }
+.additional-usage-balances { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 14px 0 0; }
+.additional-usage-balances dt { color: var(--muted); font-size: 11px; }
+.additional-usage-balances dd { margin: 6px 0 0; font-size: 12px; font-weight: 600; overflow-wrap: anywhere; }
