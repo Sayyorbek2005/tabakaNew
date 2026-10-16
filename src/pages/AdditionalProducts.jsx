@@ -4,6 +4,8 @@ import Icon from "../components/Icon";
 import EmptyState from "../components/EmptyState";
 import Modal from "../components/Modal";
 import PdfButton from "../components/PdfButton";
+import DownloadLink from "../components/DownloadLink";
+import { csvBlob, downloadFile } from "../utils/downloadFile";
 import DateRangeFilter from "../components/DateRangeFilter";
 import MoneyInput from "../components/MoneyInput";
 import AdditionalProductDetails from "../components/AdditionalProductDetails";
@@ -67,6 +69,8 @@ export default function AdditionalProducts() {
   const [products, setProducts] = useState(initial.records);
   const [storageError, setStorageError] = useState(initial.error);
   const [query, setQuery] = useState("");
+  const [csvFile, setCsvFile] = useState(null);
+  const [exportError, setExportError] = useState("");
   const [category, setCategory] = useState("");
   const [supplier, setSupplier] = useState("");
   const [dateFrom, setDateFrom] = useState("");
@@ -207,13 +211,9 @@ export default function AdditionalProducts() {
   function exportCsv() {
     const columns = ["ID", "Mahsulot", "Brend", "Kategoriya", "Ta’minotchi", "Miqdor", "Birlik", "Sotuv narxi", "Tan narxi", "Sana", "To‘langan", "Qarz", "Ortiqcha to‘lov"];
     const rows = items.map((item) => [item.code, item.name, item.brand, item.category, item.supplierName, item.quantity, item.unit, item.price, item.cost, item.date, additionalPaymentTotals(item).paid, additionalPaymentTotals(item).debt, additionalPaymentTotals(item).excess]);
-    const csv = [columns, ...rows].map((row) => row.map((value) => `"${String(value ?? "").replaceAll('"', '""')}"`).join(",")).join("\r\n");
-    const url = URL.createObjectURL(new Blob(["\uFEFF", csv], { type: "text/csv;charset=utf-8" }));
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "qoshimcha-mahsulotlar.csv";
-    link.click();
-    URL.revokeObjectURL(url);
+    setExportError("");
+    try { setCsvFile(downloadFile(csvBlob(columns, rows), "qoshimcha-mahsulotlar.csv")); }
+    catch (error) { setExportError(error.message || "CSV yuklanmadi. Qayta urinib ko‘ring."); }
   }
 
   return (
@@ -242,6 +242,8 @@ export default function AdditionalProducts() {
         </div>
       </div>
 
+      <DownloadLink file={csvFile} />
+      {exportError && <p className="form-error" role="alert">{exportError}</p>}
       {storageError && <p className="form-error" role="alert">{storageError}</p>}
 
       <div className="additional-product-stats">

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Modal from "./Modal";
+import DownloadLink from "./DownloadLink";
 import { downloadFullBackup, backupRequest, readBackupFile, applyRestoredCollection, preservePendingAndReload } from "../services/backups";
 import { getStorageStatus } from "../services/durableStorage";
 import { browserStorageMode } from "../services/browserStorage";
@@ -13,6 +14,7 @@ export default function BackupManager({ onClose }) {
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [download, setDownload] = useState(null);
   useEffect(() => {
     let active = true;
     setLoading(true); setSelected(""); setError("");
@@ -52,7 +54,8 @@ export default function BackupManager({ onClose }) {
     <Modal title="Zaxira va tiklash" onClose={onClose}>
       <div className="backup-manager">
         <p className="form-hint">{browserStorageMode ? "Yozuvlar shu saytning shu brauzer xotirasida saqlanadi. Oxirgi o‘zgarishdan oldingi bitta nusxa saqlanadi. Muntazam to‘liq JSON zaxirani yuklab oling. Boshqa qurilmaga shu fayldan tiklash mumkin." : "Har bir saqlashning oldingi holati alohida nusxada qoladi. Asosiy va qo‘shimcha mahsulotlar alohida tiklanadi."}</p>
-        <button type="button" className="button secondary" onClick={() => { try { downloadFullBackup(); } catch (error) { setError(error.message); } }}>To‘liq zaxirani yuklab olish</button>
+        <button type="button" className="button secondary" onClick={() => { setError(""); try { setDownload(downloadFullBackup()); } catch (error) { setError(error.message); } }}>To‘liq zaxirani yuklab olish</button>
+        <DownloadLink file={download} />
         {getStorageStatus().status === "conflict" && <button type="button" className="button secondary" onClick={async () => {
           setBusy(true);
           try { await preservePendingAndReload(); } catch (error) { setError(error.message); setBusy(false); }

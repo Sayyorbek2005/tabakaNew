@@ -1,15 +1,12 @@
 import { browserStorageMode, browserStorageRequest } from "./browserStorage";
 import { loadStore } from "./localRepository";
 import { readAdditionalProducts } from "./additionalProductRepository";
+import { downloadFile } from "../utils/downloadFile";
 
 export function downloadFullBackup() {
   const bundle = { format: "taminot-full-backup", version: 1, exportedAt: new Date().toISOString(), main: loadStore(), additional: readAdditionalProducts() };
-  const url = URL.createObjectURL(new Blob([JSON.stringify(bundle, null, 2)], { type: "application/json" }));
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = `taminot-zaxira-${new Date().toISOString().replace(/[:.]/g, "-")}.json`;
-  link.click();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  return downloadFile(new Blob([JSON.stringify(bundle, null, 2)], { type: "application/json" }),
+    `taminot-zaxira-${new Date().toISOString().replace(/[:.]/g, "-")}.json`);
 }
 
 export async function backupRequest(url, options = {}) {

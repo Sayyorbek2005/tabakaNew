@@ -1,3 +1,4 @@
+import { downloadFile } from "./downloadFile";
 let fontPromise;
 
 async function loadFont() {
@@ -6,6 +7,9 @@ async function loadFont() {
       const response = await fetch(`${process.env.PUBLIC_URL || ""}/fonts/NotoSans-Regular.ttf`);
       if (!response.ok) throw new Error("PDF shrifti yuklanmadi.");
       const bytes = new Uint8Array(await response.arrayBuffer());
+      if (bytes.length < 12 || !((bytes[0] === 0 && bytes[1] === 1 && bytes[2] === 0 && bytes[3] === 0) || String.fromCharCode(...bytes.subarray(0, 4)) === "OTTO")) {
+        throw new Error("PDF shrifti topilmadi. Saytni yangilab qayta urinib ko‘ring.");
+      }
       let binary = "";
       for (let offset = 0; offset < bytes.length; offset += 8192) {
         binary += String.fromCharCode(...bytes.subarray(offset, offset + 8192));
@@ -76,5 +80,5 @@ export async function downloadReportPdf(report) {
   const filename = Array.from(String(report.title || "hisobot"))
     .map((character) => character.charCodeAt(0) < 32 ? "-" : character).join("")
     .replace(/[<>:"/\\|?*]/g, "-").slice(0, 120);
-  await pdf.save(`${filename}.pdf`, { returnPromise: true });
+  return downloadFile(pdf.output("blob"), `${filename}.pdf`);
 }

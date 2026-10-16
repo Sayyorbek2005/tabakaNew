@@ -2,6 +2,7 @@ import { printReport } from "../utils/reports";
 import { useState } from "react";
 import { downloadReportPdf } from "../utils/downloadPdf";
 import Icon from "./Icon";
+import DownloadLink from "./DownloadLink";
 import "./PdfButton.css";
 
 export default function PdfButton({
@@ -11,14 +12,15 @@ export default function PdfButton({
 }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [file, setFile] = useState(null);
 
   async function download() {
     setBusy(true);
     setError("");
     try {
-      await downloadReportPdf(report);
-    } catch {
-      setError("PDF saqlanmadi. Qayta urinib ko‘ring.");
+      setFile(await downloadReportPdf(report));
+    } catch (error) {
+      setError(error.message || "PDF saqlanmadi. Qayta urinib ko‘ring.");
     } finally {
       setBusy(false);
     }
@@ -31,6 +33,7 @@ export default function PdfButton({
       </button>
       <button type="button" className="button secondary" onClick={() => printReport(report)}>Chop etish</button>
       {error && <span className="pdf-download-error" role="alert">{error}</span>}
+      <DownloadLink file={file} />
     </div>
   );
 
