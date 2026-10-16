@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Modal from "./Modal";
 import { downloadFullBackup, backupRequest, readBackupFile, applyRestoredCollection, preservePendingAndReload } from "../services/backups";
 import { getStorageStatus } from "../services/durableStorage";
+import { browserStorageMode } from "../services/browserStorage";
 import "./BackupManager.css";
 
 export default function BackupManager({ onClose }) {
@@ -50,7 +51,7 @@ export default function BackupManager({ onClose }) {
   return (
     <Modal title="Zaxira va tiklash" onClose={onClose}>
       <div className="backup-manager">
-        <p className="form-hint">Har bir saqlashning oldingi holati alohida nusxada qoladi. Asosiy va qo‘shimcha mahsulotlar alohida tiklanadi.</p>
+        <p className="form-hint">{browserStorageMode ? "Yozuvlar shu saytning shu brauzer xotirasida saqlanadi. Oxirgi o‘zgarishdan oldingi bitta nusxa saqlanadi. Muntazam to‘liq JSON zaxirani yuklab oling. Boshqa qurilmaga shu fayldan tiklash mumkin." : "Har bir saqlashning oldingi holati alohida nusxada qoladi. Asosiy va qo‘shimcha mahsulotlar alohida tiklanadi."}</p>
         <button type="button" className="button secondary" onClick={() => { try { downloadFullBackup(); } catch (error) { setError(error.message); } }}>To‘liq zaxirani yuklab olish</button>
         {getStorageStatus().status === "conflict" && <button type="button" className="button secondary" onClick={async () => {
           setBusy(true);
@@ -63,7 +64,7 @@ export default function BackupManager({ onClose }) {
         {imported && <p className="form-hint">{incoming === undefined ? "Tanlangan bo‘lim ushbu faylda yo‘q." : `Fayl tayyor: ${name === "additional" ? incoming.length : ["suppliers", "categories", "products", "payments", "usages"].reduce((sum, key) => sum + (incoming[key]?.length || 0), 0)} ta yozuv.`}</p>}
         <label className="field">Yoki oldingi saqlangan holat<select value={selected} disabled={loading || busy} onChange={(event) => { setSelected(event.target.value); setImported(null); }}>
           <option value="">{loading ? "Yuklanmoqda…" : "Nusxani tanlang"}</option>
-          {history.snapshots.map((item) => <option key={item.id} value={item.id}>{new Date(item.savedAt).toLocaleString("uz-UZ")} · {item.count} ta yozuv · №{item.revision}</option>)}
+          {history.snapshots.map((item) => <option key={item.id} value={item.id}>{browserStorageMode ? "Oxirgi o‘zgarishdan oldingi holat" : `${new Date(item.savedAt).toLocaleString("uz-UZ")} · №${item.revision}`} · {item.count} ta yozuv</option>)}
         </select></label>
         {canRestore && <div className="backup-confirm">Tanlangan bo‘lim eski holatga qaytariladi. Joriy holat avval zaxiraga olinadi.{snapshot && ` Tanlangan nusxa: ${snapshot.count} ta yozuv.`}</div>}
         {error && <p className="form-error" role="alert">{error}</p>}

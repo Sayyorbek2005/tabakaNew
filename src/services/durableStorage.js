@@ -1,3 +1,4 @@
+import { browserStorageMode, initializeBrowserStorage, saveBrowserCollection } from "./browserStorage";
 const collections = {
   main: "taminot-crm-v1",
   additional: "taminot-crm-additional-products-v1",
@@ -66,6 +67,11 @@ async function flush() {
 }
 
 export function writeDurable(name, data) {
+  if (browserStorageMode) {
+    saveBrowserCollection(name, data);
+    publish("saved", "Brauzerda saqlandi");
+    return;
+  }
   const serialized = JSON.stringify(data);
   const key = collections[name];
   // Mark unsent changes before updating the cache, so closing immediately is recoverable.
@@ -76,6 +82,11 @@ export function writeDurable(name, data) {
 }
 
 export async function initializeStorage() {
+  if (browserStorageMode) {
+    initializeBrowserStorage();
+    publish("saved", "Brauzerda saqlandi");
+    return true;
+  }
   let unavailable = false;
   let canOpen = true;
   await Promise.all(Object.entries(collections).map(async ([name, key]) => {

@@ -1,3 +1,16 @@
+## Vercel va mijozlarga alohida sayt
+
+Standart rejim: localStorage. Backend va Supabase talab qilinmaydi. `npm run build` va Vercel `build` output katalogi ishlatiladi.
+
+Har bir mijoz uchun alohida Vercel loyiha va alohida domen/subdomen yarating. Bir domen ichidagi turli yo‘llar (/mijoz1, /mijoz2) localStorage xotirasini ajratmaydi. Mijozlar hisobini bitta saytga aralashtirmang.
+
+Sahifani yangilash, brauzerni qayta ochish va shu domenga yangi deploy qilish yozuvlarni tozalamaydi. Telefon va noutbuk xotiralari alohida: avtomatik sinxronlash yo‘q. Sayt domeni o‘zgarsa, eski domenda to‘liq JSON zaxira olib, yangi saytda tiklang. Ushbu zaxira oynasida bo‘limlarni alohida tanlab tiklash kerak.
+
+Brauzer xotirasini tozalash, inkognito, qurilma yo‘qolishi yoki brauzer tomonidan xotira o‘chirilishi ma’lumot yo‘qolishiga olib kelishi mumkin. Muntazam “Zaxira va tiklash” orqali to‘liq JSON nusxa yuklab oling. Brauzer ichidagi oldingi nusxa ham shu xotirada, tashqi zaxira o‘rnini bosmaydi. Login yo‘q: shu qurilma va brauzerdan foydalangan odam yozuvlarni ko‘ra oladi.
+
+Eski disk-server rejimi kerak bo‘lsa, build/start muhitida `REACT_APP_STORAGE_MODE=server` belgilang va mahalliy Node serverini ishga tushiring. Vercel statik rejimida buni belgilamang.
+
+---
 # Ta’minot CRM — Create React App
 
 Minimal, yashil va oq ranglardagi ta’minotchilar hisobi. Barcha sahifalar va komponentlar alohida JSX, har bir sahifa uchun alohida CSS faylga ajratilgan. Supabase hozircha ulanmagan.

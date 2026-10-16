@@ -1,3 +1,4 @@
+import { browserStorageMode, browserStorageRequest } from "./browserStorage";
 import { loadStore } from "./localRepository";
 import { readAdditionalProducts } from "./additionalProductRepository";
 
@@ -12,6 +13,7 @@ export function downloadFullBackup() {
 }
 
 export async function backupRequest(url, options = {}) {
+  if (browserStorageMode) return browserStorageRequest(url, options);
   const response = await fetch(url, { ...options, cache: "no-store" });
   if (!response.headers.get("content-type")?.includes("application/json")) throw new Error("Zaxira serveriga ulanib bo‘lmadi.");
   const result = await response.json();
@@ -46,5 +48,5 @@ export function applyRestoredCollection(name, data, revision) {
   const key = name === "main" ? "taminot-crm-v1" : "taminot-crm-additional-products-v1";
   localStorage.setItem(key, JSON.stringify(data));
   localStorage.removeItem(`${key}:pending`);
-  localStorage.setItem(`${key}:revision`, String(revision));
+  if (!browserStorageMode) localStorage.setItem(`${key}:revision`, String(revision));
 }
