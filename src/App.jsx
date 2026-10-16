@@ -12,6 +12,7 @@ import AdditionalProducts from "./pages/AdditionalProducts";
 import Categories from "./pages/Categories";
 import Payments from "./pages/Payments";
 
+// ?app
 import "./App.css";
 
 const getPage = () => {
